@@ -1,3 +1,4 @@
+<div id="app">
 <%= form_with(model: [:admin, post], local: true) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
@@ -25,8 +26,8 @@
 
   <div class="form-group">
     <%= form.label :content %>
-    <input id="post_content" value="<%= post.content %>" type="hidden" name="post[content]">
-    <trix-editor class="trix-content" input="post_content"></trix-editor>
+    <input id="post_content" value="<%= post.content %>" type="hidden" name="post[content]" >
+    <trix-editor class="trix-content" input="post_content" @focus="onFocus" @blur="onFocusOut"></trix-editor>
   </div>
 
   <div class="form-group">
@@ -41,3 +42,70 @@
     <%= form.submit 'Save', class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+</div>
+
+<% if Rails.env.development? %>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<% else %>
+  <script src="https://unpkg.com/vue"></script>
+<% end %>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CPromise%2CSymbol%2CObject.setPrototypeOf%2CObject.getOwnPropertySymbols"></script>
+<script src="https://cdn.jsdelivr.net/npm/superagent"></script>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            post: {
+                id: <%= post.id.present? ? post.id : "null" %>,
+            },
+            timerId: null
+        },
+        mounted() {
+            console.log('Post app mounted')
+        },
+        methods: {
+            onFocus() {
+                if(this.post.id) {
+                    console.log('starting timer')
+                    this.timerId = setInterval(this.saveContent, 5000);
+                    console.log('timer id: ' + this.timerId)
+                }
+
+            },
+            onFocusOut() {
+                if(this.timerId) {
+                    console.log('stopping timer')
+                    clearInterval(this.timerId)
+                }
+
+                this.timerId = null
+            },
+            saveContent() {
+                console.log('saveContent')
+                var request = {
+                    content: $('#post_content').val()
+                }
+
+                superagent
+                    .put('/admin/posts/' + this.post.id + '.json')
+                    .send({post: request}) // sends a JSON post body
+                    .set('X-CSRF-Token', Rails.csrfToken())
+                    .set('content-type', 'application/json')
+                    .set('accept', 'json')
+                    .end((err, res) => {
+
+                        if (err) {
+                            console.log(res.text)
+                        }
+                        else {
+                            console.log('content saved')
+                        }
+                    })
+            }
+        }
+    })
+</script>
