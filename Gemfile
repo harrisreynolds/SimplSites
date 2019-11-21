@@ -32,7 +32,6 @@ gem 'omniauth-google-oauth2'
 gem 'friendly_id'
 gem 'stripe'
 
-gem 'webpacker'
 gem 'foreman'
 
 # Reduces boot times through caching; required in config/boot.rb

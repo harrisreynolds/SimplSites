@@ -2,11 +2,11 @@
 
   <div class="text-center py-5">
 
-    <% if user_signed_in? %>
+    <% if user_signed_in? && current_user.admin? %>
         <%= link_to 'Admin', admin_path %> |
     <% end %>
 
-    © <%= Date.current.year %> Nimble Labs, LLC
+    © <%= Date.current.year %> Harris Reynolds
 
   </div>
 
