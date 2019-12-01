@@ -52,7 +52,6 @@
   <script src="https://unpkg.com/vue"></script>
 <% end %>
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CPromise%2CSymbol%2CObject.setPrototypeOf%2CObject.getOwnPropertySymbols"></script>
 <script src="https://cdn.jsdelivr.net/npm/superagent"></script>
 
 <script>
@@ -109,3 +108,5 @@
         }
     })
 </script>
+
+<%= javascript_include_tag 'trix' %>
