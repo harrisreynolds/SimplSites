@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.0'
 
+gem "nokogiri", ">= 1.10.4"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.2.3'
 # Use postgresql as the database for Active Record
@@ -26,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-gem 'devise', '>= 4.6.0'
+gem "devise", ">= 4.7.1"
 gem 'recaptcha'
 gem 'omniauth-google-oauth2'
 gem 'friendly_id'

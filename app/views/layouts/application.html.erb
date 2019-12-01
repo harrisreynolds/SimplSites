@@ -17,8 +17,14 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="main">
+  <div class="container mt-5">
+    <%= link_to 'Home', root_path %>
+  </div>
 
+  <%= yield %>
+
+</div>
 <%= render 'shared/footer' %>
 
 <!-- Optional JavaScript -->
