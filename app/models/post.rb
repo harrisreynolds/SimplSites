@@ -16,4 +16,6 @@ class Post < ApplicationRecord
   friendly_id :title, use: [:slugged, :finders]
 
   has_one_attached :image
+  scope :ready, -> { where(published: true) }
+  scope :unpublished, -> { where(published: false) }
 end
