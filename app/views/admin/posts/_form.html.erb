@@ -59,12 +59,9 @@
         el: '#app',
         data: {
             post: {
-                id: <%= post.id.present? ? post.id : "null" %>,
+                id: "<%= post.slug.present? ? post.slug : '' %>",
             },
             timerId: null
-        },
-        mounted() {
-            console.log('Post app mounted')
         },
         methods: {
             onFocus() {
